@@ -26,17 +26,13 @@ numMap = {
     "nine": "9",
 }
 
-numStrings = tuple(["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"])
-
 newLines = []
 for line in lines:
     for i in range(len(line)):
         for key in numMap:
             if line.startswith(key, i):
-                # line = line.replace(key, numMap[key])
-                line = line[:i + 1] + numMap[key] + line[i + 1:]
+                line = line[:i + 1] + numMap[key] + line[i + 2:]
                 break
-    print(line)
     newLines.append(line)
 
 total = sum(map(combine, map(getDigits, newLines)))
