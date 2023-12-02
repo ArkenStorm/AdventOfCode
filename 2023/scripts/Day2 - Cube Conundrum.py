@@ -12,13 +12,17 @@ maxes = {
 	'blue': 14,
 }
 
-impossible = []
+impossible = set()
+possible = set(range(1, 101))
 
 for line in lines:
 	game, subsets = line.split(': ')
-	game_id = re.match(r"Game (\d+)", game).group(1)
+	game_id = int(re.match(r"Game (\d+)", game).group(1))
 	draws = re.findall(r"(?:(?:(\d+) (?:(green|red|blue)(?:, )?){1,3})(?:; )?)", subsets)
-	impossible.extend(game_id for val, color in draws if int(val) > maxes[color] and game_id not in impossible)
+	impossible.update(game_id for val, color in draws if int(val) > maxes[color])
 
-# print(impossible)
-print(f"Part 1: {sum(map(int, impossible))}")
+possible = possible - impossible
+print(f"Part 1: {sum(possible)}")
+
+
+# Part 2
