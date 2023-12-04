@@ -37,7 +37,6 @@ for i in range(len(schematic)):
 print(f"Part 1: {part_num_sum}")
 
 # Part 2
-
 gear_ratio_sum = 0
 
 def get_adjacent_parts(i, j):
