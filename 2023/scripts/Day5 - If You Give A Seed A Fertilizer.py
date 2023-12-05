@@ -1,3 +1,5 @@
+from collections import deque
+
 inFile = open('../inputs/Day5.txt', 'r')
 lines = inFile.read().splitlines()
 
@@ -7,13 +9,23 @@ print('Day 5 - If You Give A Seed A Fertilizer')
 seeds = lines[0][6:].split()
 
 # destination, source, range
-seed_to_soil = [mapping.split() for mapping in lines[4:46]]
-soil_to_fertilizer = [mapping.split() for mapping in lines[49:61]]
-fertilizer_to_water = [mapping.split() for mapping in lines[64:108]]
-water_to_light = [mapping.split() for mapping in lines[111:145]]
-light_to_temperature = [mapping.split() for mapping in lines[148:160]]
-temperature_to_humidity = [mapping.split() for mapping in lines[163:196]]
-humidity_to_location = [mapping.split() for mapping in lines[199:]]
+seed_to_soil = [mapping.split() for mapping in lines[3:46]]
+soil_to_fertilizer = [mapping.split() for mapping in lines[48:61]]
+fertilizer_to_water = [mapping.split() for mapping in lines[63:108]]
+water_to_light = [mapping.split() for mapping in lines[110:145]]
+light_to_temperature = [mapping.split() for mapping in lines[147:160]]
+temperature_to_humidity = [mapping.split() for mapping in lines[162:196]]
+humidity_to_location = [mapping.split() for mapping in lines[198:]]
+
+map_chain = [
+	seed_to_soil,
+	soil_to_fertilizer,
+	fertilizer_to_water,
+	water_to_light,
+	light_to_temperature,
+	temperature_to_humidity,
+	humidity_to_location,
+]
 
 min_location = 9999999999999
 
@@ -40,5 +52,46 @@ print(f"Part 1: {min_location}")
 
 # Part 2
 seed_ranges = list(zip(seeds[::2], seeds[1::2]))
+stack = deque()
+min_location = 9999999999999
+
+for seed_range in seed_ranges:
+	stack.append((seed_range, 0))  # ( (start, len), stage )
+
+	while len(stack) > 0:
+		curr_range, stage = stack.pop()
+
+		if stage == len(map_chain):
+			min_location = min(min_location, curr_range[0])
+			continue
+
+		curr_map = map_chain[stage]
+		found_overlap = False
+
+		for line in curr_map:
+			dest, src, rng = int(line[0]), int(line[1]), int(line[2])
+			curr_range_start = int(curr_range[0])
+			curr_range_end = curr_range_start + int(curr_range[1])
+			map_end = src + rng
+			if curr_range_end < src or curr_range_start >= map_end:
+				continue
+			found_overlap = True
+			if curr_range_start < src and curr_range_end > map_end: # source range encapsulates map range
+				# split into 3 chunks of [start, end), [start, end], (start, end]
+				stack.append( ((curr_range_start, src - curr_range_start), stage) )
+				stack.append( ((dest, rng), stage + 1) )
+				stack.append( ((map_end, curr_range_end - map_end), stage) )
+			elif curr_range_start < src and src < curr_range_end <= map_end:
+				stack.append( ((curr_range_start, src - curr_range_start), stage) )
+				stack.append( ((dest, curr_range_end - src), stage + 1) )
+			elif src <= curr_range_start < map_end and curr_range_end > map_end:
+				stack.append( ((dest + (curr_range_start - src), map_end - curr_range_start), stage + 1) )
+				stack.append( ((map_end, curr_range_end - map_end), stage) )
+			else:
+				stack.append( ((dest + (curr_range_start - src), int(curr_range[1])), stage + 1) )
+			break
+		if not found_overlap:
+			stack.append((curr_range, stage + 1))
+			
 
 print(f"Part 2: {min_location}")
