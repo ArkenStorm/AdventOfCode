@@ -1,7 +1,8 @@
 from collections import Counter
 from functools import reduce
 
-inFile = open('../inputs/test.txt', 'r')
+inFile = open('../inputs/Day7.txt', 'r')
+# inFile = open('../inputs/test.txt', 'r')
 # inFile = open('2023/inputs/test.txt')
 lines = inFile.read().splitlines()
 
