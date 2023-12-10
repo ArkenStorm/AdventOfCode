@@ -21,17 +21,8 @@ loop = [pos]
 def get_possible_next(tile, x, y):
 	n, e, s, w = (x - 1, y), (x, y + 1), (x + 1, y), (x, y - 1)
 	tile_map = { '|': (n, s), '-': (w, e), 'L': (n, e), 'J': (n, w), '7': (s, w), 'F': (s, e) }
-	if tile == 'S':
-		if grid[x - 1, y] in '|7F':
-			return n
-		elif grid[x + 1, y] in '|LJ':
-			return s
-		elif grid[x, y + 1] in '-J7':
-			return e
-		elif grid[x, y - 1] in '-LF':
-			return w
-	else:
-		return tile_map[tile]
+	start_map = { n: '|7F', e: '-J7', s: '|LJ', w: '-LF' }
+	return tile_map[tile] if tile != 'S' else next(dir for dir in [n, e, s, w] if grid[*dir] in start_map[dir])
 
 
 pos = get_possible_next('S', *pos)
@@ -47,9 +38,9 @@ print(f"Part 1: {len(loop) // 2}")
 
 # Part 2
 enclosed_points = 0
-polygon = Path(loop)
+polygon, vertices = Path(loop), set(loop)
 
-reductor = lambda acc, coords: acc + 1 if coords not in loop and polygon.contains_point(coords) else acc
-enclosed_points = reduce(reductor, ((x, y) for x in range(len(lines)) for y in range(len(lines[0]))), 0)
+reductor = lambda acc, coord: acc + 1 if coord not in vertices and polygon.contains_point(coord) else acc
+enclosed_points = reduce(reductor, ((x, y) for x, y in np.ndindex(np.shape(grid))), 0)
 
 print(f"Part 2: {enclosed_points}")
