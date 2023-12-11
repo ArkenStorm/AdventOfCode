@@ -8,6 +8,11 @@ inFile = open('../inputs/Day10.txt', 'r')
 # inFile = open('2023/inputs/test.txt', 'r')
 lines = inFile.read().splitlines()
 
+# from aoc_utils import *
+
+# test = False
+# lines = get_input('2023', 10, test)
+
 print('Day 10 - Pipe Maze')
 
 grid = np.array([list(line) for line in lines])
