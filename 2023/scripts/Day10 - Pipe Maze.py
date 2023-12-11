@@ -26,13 +26,13 @@ def get_possible_next(tile, x, y):
 
 
 pos = get_possible_next('S', *pos)
-curr_tile = grid[pos[0], pos[1]]
+curr_tile = grid[*pos]
 
 while curr_tile != 'S':
 	loop.append(pos)
 	first, second = get_possible_next(curr_tile, *pos)
 	pos = first if loop[-2] != first else second
-	curr_tile = grid[pos[0], pos[1]]
+	curr_tile = grid[*pos]
 
 print(f"Part 1: {len(loop) // 2}")
 
