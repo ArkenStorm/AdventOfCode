@@ -27,12 +27,6 @@ for op in sequence:
 		lens, _ = op.split('-')
 		boxes[hash(lens)].pop(lens, None)
 
-focus_power = 0
-
-for box_num, box in enumerate(boxes, 1):
-	box_focus = 0
-	for slot, (lens, focus) in enumerate(box.items(), 1):
-		box_focus += slot * focus
-	focus_power += box_num * box_focus
+focus_power = reduce(lambda acc, box: acc + sum(slot * focus for slot, (_, focus) in enumerate(box[1].items(), 1)) * box[0], enumerate(boxes, 1), 0)
 
 print(f"Part 2: {focus_power}")
