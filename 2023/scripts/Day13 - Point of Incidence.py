@@ -77,16 +77,14 @@ def check_reflection_2(pattern, pattern_idx, vertical: bool, smudges=0):
 		if first != second:
 			diffs += 1
 		if first == second or diffs <= smudges:
-			is_mirrored = True
-
-			b_bound, f_bound = max(0, i+1), min(len(sequence), i+1)
+			b_bound, f_bound = i - min(len(sequence) - 2, i+1), max(len(sequence), i+2)
 			if vertical:
-				b_arr, f_arr = pattern[:,:i+1], np.fliplr(pattern[:,i+1:])
+				b_arr, f_arr = pattern[:,b_bound:i+1], np.fliplr(pattern[:,i+1:f_bound])
 			else:
-				b_arr, f_arr = pattern[:i+1,:], np.flipud(pattern[i+1:,:])
+				b_arr, f_arr = pattern[b_bound:i+1,:], np.flipud(pattern[i+1:f_bound,:])
 			diffs = np.sum(b_arr == f_arr)
-			
-			
+			is_mirrored = diffs <= smudges
+
 			if is_mirrored:
 				val = (i, vertical)
 				if pattern_idx not in reflections or reflections[pattern_idx] != val:

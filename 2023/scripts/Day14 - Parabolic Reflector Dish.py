@@ -1,5 +1,4 @@
 import numpy as np
-from functools import reduce
 from itertools import chain
 
 # inFile = open('../inputs/Day14.txt', 'r')
