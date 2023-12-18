@@ -1,4 +1,3 @@
-from matplotlib.path import Path
 from shapely import Polygon
 
 inFile = open('../inputs/Day18.txt', 'r')
