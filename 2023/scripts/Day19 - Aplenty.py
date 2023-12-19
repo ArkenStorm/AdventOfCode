@@ -1,9 +1,9 @@
 import re
 from functools import reduce
 
-inFile = open('../inputs/Day19.txt', 'r')
+# inFile = open('../inputs/Day19.txt', 'r')
 # inFile = open('../inputs/test.txt', 'r')
-# inFile = open('2023/inputs/Day19.txt')
+inFile = open('2023/inputs/Day19.txt')
 # inFile = open('2023/inputs/test.txt', 'r')
 rules, parts = inFile.read().split('\n\n')
 rules, parts = rules.split('\n'), parts.split('\n')
@@ -20,32 +20,22 @@ wfs = {}
 
 for rule in rules:
 	workflow, conditions = re.match(rule_re, rule).groups()
-	conditions = conditions.split(',')
-	parsed_conditions = []
-	for cond in conditions:
-		if ':' in cond:
-			prop, op, val, dest = re.match(cond_re, cond).groups()
-			parsed_conditions.append((prop, op, int(val), dest))
-		else:
-			parsed_conditions.append((cond,))
-	wfs[workflow] = parsed_conditions
+	wfs[workflow] = [
+		(*match.groups()[:2], int(match.group(3)), match.group(4))
+		if (match := re.match(cond_re, cond)) and ':' in cond else (cond,)
+		for cond in conditions.split(',')
+	]
 
 
 # Part 1
 accepted = []
-
+	
 def send_to_dest(part, dest):
-	if dest == 'A':
-		accepted.append(part)
-		return
-	elif dest == 'R':
-		return
-	else:
-		return process_part(part, dest)
+    return accepted.append(part) if dest == 'A' else None if dest == 'R' else process_part(part, dest)
+
 
 def process_part(part, wf):
-	conditions = wfs[wf]
-	for cond in conditions:
+	for cond in wfs[wf]:
 		if len(cond) == 1:
 			return send_to_dest(part, cond[0])
 		else:
@@ -56,10 +46,7 @@ def process_part(part, wf):
 part_re = r"([xmas])=(\d+)"
 
 for part in parts:
-	parsed_part = {}
-	for prop, val in re.findall(part_re, part):
-		parsed_part[prop] = int(val)
-
+	parsed_part = { p: int(v) for p, v in re.findall(part_re, part) }
 	process_part(parsed_part, 'in')
 
 accepted_ratings = reduce(lambda acc, p: acc + sum(p.values()), accepted, 0)
@@ -79,6 +66,7 @@ def handle_dest(dest, r: dict):
 		return
 	else:
 		return find_ranges(dest, r)
+
 
 # r is the current working range
 def find_ranges(wf, r: dict):
@@ -100,6 +88,5 @@ def find_ranges(wf, r: dict):
 			# continue with current r
 
 find_ranges('in', ranges)
-
 
 print(f"Part 2: {combos}")
