@@ -1,5 +1,4 @@
 import numpy as np
-from functools import reduce
 import sys
 sys.setrecursionlimit(10000)
 

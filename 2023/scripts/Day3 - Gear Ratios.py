@@ -10,14 +10,14 @@ print('Day 3 - Gear Ratios')
 symbols = { '!', '@', '#', '$', '%', '^', '&', '*', '-', '+', '=', '/' }
 
 part_num_sum = 0
-part_nums = [[] for x in range(len(schematic[0]))] # ((str)match_val, (start_idx, end_idx))
+part_nums = [[] for _ in range(len(schematic[0]))] # ((str)match_val, (start_idx, end_idx))
 
 def symbol_adjacent(i, j):
 	rows, cols = len(schematic), len(schematic[0])
 
 	neighbors = [
 		schematic[x][y]
-		for x in range(max(0, i - 1), min(rows, i+ 2))
+		for x in range(max(0, i - 1), min(rows, i + 2))
 		for y in range(max(0, j - 1), min(cols, j + 2))
 		if (x,y) != (i, j) and 0 <= x < rows and 0 <= y < cols
 	]
