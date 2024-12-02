@@ -1,1 +1,1 @@
-from .aoc_utils import *
+from aoc_utils import *
