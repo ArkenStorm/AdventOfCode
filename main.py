@@ -1,6 +1,6 @@
 # imports
 # import import_module, util from importlib
-from aoc_utils import get_input
+from utils import get_input
 
 if __name__ == '__main__':
 	year = 2024
