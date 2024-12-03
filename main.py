@@ -3,7 +3,7 @@ import shutil
 
 if __name__ == '__main__':
 	year = 2024
-	day = 2
+	day = 3
 
 	print(f'Advent of Code {year}')
 
@@ -13,5 +13,5 @@ if __name__ == '__main__':
 	except ModuleNotFoundError:
 		print(f'No module found for Day {day}, creating...')
 		shutil.copy('template.py', f'{year}/scripts/Day{day}.py')
+		open(f'{year}/inputs/Day{day}.txt', 'w').close()
 		print(f'Created Day{day}.py for {year}')
-		exit()
