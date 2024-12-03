@@ -1,30 +1,28 @@
+from utils import *
 import re
 from collections import Counter
 
-# inFile = open('../inputs/Day1.txt', 'r')
-# inFile = open('../inputs/test.txt', 'r')
-inFile = open('2024/inputs/Day1.txt', 'r')
-# inFile = open('2024/inputs/test.txt', 'r')
-lines = inFile.read().splitlines()
+def part_1(left, right):
+	return sum(map(lambda x: abs(x[0] - x[-1]), zip(left, right)))
 
-print('Day 1 - Historian Hysteria')
+def part_2(left, right):
+	occurrences = Counter(right)
+	return sum(map(lambda x: x * occurrences[x], left))
 
-# Part 1
-left, right = [], []
+def main(year, day):
+	print(f'Day {day} - Historian Hysteria')
+	
+	input = get_input(year, day)
 
-for line in lines:
-	l, r = re.split(r'[\n\t\f\v\r ]+', line)
-	left.append(l)
-	right.append(r)
+	left, right = [], []
 
-left = sorted(map(int, left))
-right = sorted(map(int, right))
+	for line in input:
+		l, r = re.split(r'[\n\t\f\v\r ]+', line)
+		left.append(l)
+		right.append(r)
 
-p1_total = sum(map(lambda x: abs(x[0] - x[-1]), zip(left, right)))
-print(f'Part 1: {p1_total}')
+		left = sorted(map(int, left))
+		right = sorted(map(int, right))
 
-# Part 2
-occurrences = Counter(right)
-p2_total = sum(map(lambda x: x * occurrences[x], left))
-
-print(f'Part 2: {p2_total}')
+	print(f'Part 1: {part_1(left, right)}')
+	print(f'Part 2: {part_2(left, right)}')
