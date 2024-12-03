@@ -1,4 +1,5 @@
 from utils import *
+from datetime import datetime
 import re
 from collections import Counter
 
@@ -24,5 +25,12 @@ def main(year, day):
 		left = sorted(map(int, left))
 		right = sorted(map(int, right))
 
+	p1_start = datetime.now()
 	print(f'Part 1: {part_1(left, right)}')
+	p1_end = datetime.now()
+
+	p2_start = datetime.now()
 	print(f'Part 2: {part_2(left, right)}')
+	p2_end = datetime.now()
+
+	print(f'\nExecution Times:\n\tPart 1: {p1_end - p1_start}\n\tPart 2: {p2_end - p2_start}\n')
