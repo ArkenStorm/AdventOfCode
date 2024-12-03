@@ -34,7 +34,7 @@ def bfs(matrix, start, max_steps):
 		if curr_steps == max_steps:
 			reachable_plots += 1
 			continue
-	
+
 		rows, cols = len(matrix), len(matrix[0])
 		neighbors = [(pos[0] + 1, pos[1]), (pos[0] - 1, pos[1]), (pos[0], pos[1] + 1), (pos[0], pos[1] - 1)]
 		neighbors = list(filter(lambda c: 0 <= c[0] < rows and 0 <= c[1] < cols and matrix[c] != '#', neighbors))

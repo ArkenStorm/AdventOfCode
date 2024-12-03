@@ -12,7 +12,7 @@ if __name__ == '__main__':
 		module = import_module(f'{year}.scripts.Day{day}')
 		start_time = datetime.now()
 		module.main(year, day)
-		print(f'Total Execution Time: {datetime.now() - start_time} seconds')
+		print(f'Total Execution Time: {datetime.now() - start_time}')
 	except ModuleNotFoundError:
 		print(f'No module found for Day {day}, creating...')
 		shutil.copy('template.py', f'{year}/scripts/Day{day}.py')

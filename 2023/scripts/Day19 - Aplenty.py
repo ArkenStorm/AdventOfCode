@@ -29,7 +29,7 @@ for rule in rules:
 
 # Part 1
 accepted = []
-	
+
 def send_to_dest(part, dest):
     return accepted.append(part) if dest == 'A' else None if dest == 'R' else process_part(part, dest)
 

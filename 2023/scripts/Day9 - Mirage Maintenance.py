@@ -16,7 +16,7 @@ for line in lines:
 	while not all(d == 0 for d in curr_diff):
 		curr_diff = np.diff(curr_diff)
 		diffs.append(curr_diff)
-	
+
 	p1_prev, p2_prev = 0, 0
 	for i in range(len(diffs) - 2, -1, -1):
 		p1_prev += diffs[i][-1]

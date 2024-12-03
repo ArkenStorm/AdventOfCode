@@ -45,5 +45,5 @@ for start in starts:
 			if curr[2] == 'Z':
 				break
 	step_counts.append(curr_steps)
-	
+
 print(f"Part 2: {math.lcm(*step_counts)}")

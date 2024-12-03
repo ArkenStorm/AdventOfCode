@@ -36,7 +36,7 @@ def dfs(pos, path: set, use_slopes=True):
 				path.add(new_pos)
 				dfs(new_pos, path, use_slopes)
 			return
-	
+
 	for d in get_dirs(pos, path):
 		new_path = path.copy()
 		new_path.add(d)
@@ -75,7 +75,7 @@ def dfs_adj(pos, path: dict):
 	if pos == end:
 		path_lens.append(sum(path.values()))
 		return
-	
+
 	for n in graph[pos]:
 		if n in path:
 			continue

@@ -92,6 +92,6 @@ for seed_range in seed_ranges:
 			break
 		if not found_overlap:
 			stack.append((curr_range, stage + 1))
-			
+
 
 print(f"Part 2: {min_location}")

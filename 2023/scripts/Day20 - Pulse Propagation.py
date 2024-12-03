@@ -15,12 +15,12 @@ for line in lines:
 	src, dests = line.split(' -> ')
 	dests = dests.split(', ')
 	key = 'broadcaster' if src == 'broadcaster' else src[1:]
-	
+
 	if src.startswith('%'):
 		flips[src[1:]] = False
 	elif src.startswith('&'):
 		cons[src[1:]] = {}
-	
+
 	modules[key] = dests
 
 for mod in modules:
@@ -51,7 +51,7 @@ def send_pulses(src, mod, p_type):
 		else:
 			flips[mod] = True
 			flip_p_type = 'high'
-		
+
 		for dest in modules[mod]:
 			pulse_map[flip_p_type] += 1
 			signals.put((mod, dest, flip_p_type))

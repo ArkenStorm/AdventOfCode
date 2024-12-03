@@ -24,9 +24,9 @@ def hand_strength(hand: str, jokers: bool):
 		return (max(possible_types), *converted_hand)
 	else:
 		return (get_hand_type(hand), *converted_hand)
-	
+
 winnings = []
-for jokers in [False, True]: 
+for jokers in [False, True]:
 	pairs = sorted((hand_strength(hand, jokers), int(bid)) for hand, bid in (l.split() for l in lines))
 	winnings.append(reduce(lambda acc, i: acc + ((i+1) * pairs[i][1]), range(len(pairs)), 0))
 

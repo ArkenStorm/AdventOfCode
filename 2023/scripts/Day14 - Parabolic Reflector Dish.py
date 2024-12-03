@@ -21,7 +21,7 @@ def tilt(grid):
 		col = ''.join(chain.from_iterable(grid[:,i:i+1])).split('#')
 		for j in range(len(col)):
 			col[j] = ''.join(sorted(col[j])[::-1])
-		sorted_col = '#'.join(col)	
+		sorted_col = '#'.join(col)
 		grid[:,i:i+1] = np.array(list([r] for r in sorted_col))
 	return grid
 

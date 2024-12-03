@@ -32,8 +32,8 @@ def dijkstra(q: list, min_streak=1, max_streak=3):
 			new_pos = (pos[0] + new_dir[0], pos[1] + new_dir[1])
 			new_streak = streak + 1 if new_dir == dir else 1
 			if (
-				not 0 <= new_pos[0] < len(grid) or 
-				not 0 <= new_pos[1] < len(grid[0]) or 
+				not 0 <= new_pos[0] < len(grid) or
+				not 0 <= new_pos[1] < len(grid[0]) or
 				new_dir == inverses[dir] or
 				(new_dir != dir and streak < min_streak) or
 				(new_dir == dir and streak == max_streak) or

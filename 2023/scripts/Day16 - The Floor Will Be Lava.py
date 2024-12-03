@@ -29,7 +29,7 @@ mirrors = {
 def trace_path(pos: tuple, dir: tuple, curr_energy: int):
 	if (pos, dir) in seen or pos[0] < 0 or pos[0] >= len(grid) or pos[1] < 0 or pos[1] >= len(grid[0]):
 		return curr_energy
-	
+
 	seen.add((pos, dir))
 	if not energy_grid[pos[0]][pos[1]]:
 		energy_grid[pos[0]][pos[1]] = True
