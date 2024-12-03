@@ -12,7 +12,7 @@ def part_2(lines):
 
 def main(year, day):
 	print(f'Day {day} - Red-Nosed Reports')
-	
+
 	input = get_input(year, day)
 	lines = [list(map(int, line.split())) for line in input]
 

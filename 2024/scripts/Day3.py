@@ -26,7 +26,7 @@ def part_2(input):
 
 def main(year, day):
 	print(f'Day {day} - Mull It Over')
-	
+
 	input = get_input(year, day, test=False)
 
 	p1_start = datetime.now()

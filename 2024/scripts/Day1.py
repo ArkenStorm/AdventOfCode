@@ -12,7 +12,7 @@ def part_2(left, right):
 
 def main(year, day):
 	print(f'Day {day} - Historian Hysteria')
-	
+
 	input = get_input(year, day)
 
 	left, right = [], []
