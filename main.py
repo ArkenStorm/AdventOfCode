@@ -3,7 +3,7 @@ import shutil
 
 if __name__ == '__main__':
 	year = 2024
-	day = 1
+	day = 2
 
 	print(f'Advent of Code {year}')
 
