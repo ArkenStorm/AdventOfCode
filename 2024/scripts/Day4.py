@@ -23,12 +23,7 @@ def find_xmas(grid, i, j):
 	return found
 
 def part_1(input):
-	total = 0
-	for i in range(len(input)):
-		for j in range(len(input[i])):
-			if input[i][j] == 'X':
-				total += find_xmas(input, i, j)
-	return total
+	return sum(find_xmas(input, i, j) for i in range(len(input)) for j in range(len(input[i])) if input[i][j] == 'X')
 
 def find_x_mas(grid, i, j):
 	tlbr = grid[i - 1][j - 1] + grid[i][j] + grid[i + 1][j + 1] # top left bottom right
@@ -39,12 +34,7 @@ def find_x_mas(grid, i, j):
 	return 0
 
 def part_2(input):
-	total = 0
-	for i in range(1, len(input) - 1):
-		for j in range(1, len(input[i]) - 1):
-			if input[i][j] == 'A':
-				total += find_x_mas(input, i, j)
-	return total
+    return sum(find_x_mas(input, i, j) for i in range(1, len(input) - 1) for j in range(1, len(input[i]) - 1) if input[i][j] == 'A')
 
 def main(year, day):
 	print(f'Day {day} - Ceres Search')
