@@ -31,10 +31,9 @@ def part_1(input):
 	return total
 
 def find_x_mas(grid, i, j):
-	# top left bottom right
-	tlbr = grid[i - 1][j - 1] + grid[i][j] + grid[i + 1][j + 1]
-	# bottom left top right
-	bltr = grid[i + 1][j - 1] + grid[i][j] + grid[i - 1][j + 1]
+	tlbr = grid[i - 1][j - 1] + grid[i][j] + grid[i + 1][j + 1] # top left bottom right
+	bltr = grid[i + 1][j - 1] + grid[i][j] + grid[i - 1][j + 1] # bottom left top right
+
 	if (tlbr == 'MAS' or tlbr == 'SAM') and (bltr == 'MAS' or bltr == 'SAM'):
 		return 1
 	return 0
