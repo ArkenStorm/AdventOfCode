@@ -13,17 +13,16 @@ def part_1(dependencies, updates):
 		for i in range(len(order) - 1, -1, -1):
 			if any(order[i] in dependencies[x] for x in order[:i]):
 				update_is_good = False
-				invalid_updates.append(update)
+				invalid_updates.append(order)
 				break
 		if update_is_good:
-			valid_updates.append(update)
+			valid_updates.append(order)
 
-	return sum(int(u.split(',')[len(u.split(',')) // 2]) for u in valid_updates)
+	return sum(int(u[len(u) // 2]) for u in valid_updates)
 
 def part_2(dependencies):
 	fixed_updates = []
-	for update in invalid_updates:
-		order = update.split(',')
+	for order in invalid_updates:
 		i = 0
 		while i < len(order) - 1:
 			if order[i + 1] in dependencies[order[i]]:
