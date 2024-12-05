@@ -18,16 +18,27 @@ def part_1(dependencies, updates):
 		if update_is_good:
 			valid_updates.append(update)
 
+	# works but is slower
+	# for update in updates:
+	# 	order = update.split(',')
+	# 	if all(not any(order[i] in dependencies[x] for x in order[:i]) for i in range(len(order))):
+	# 		valid_updates.append(update)
+	# 	else:
+	# 		invalid_updates.append(update)
+
 	return sum(int(vu.split(',')[len(vu.split(',')) // 2]) for vu in valid_updates)
 
 def part_2(dependencies):
 	fixed_updates = []
 	for update in invalid_updates:
 		order = update.split(',')
-		while not all(order[i] in dependencies[x] for i in range(len(order) - 1) for x in order[i+1:]):
-			for i in range(len(order) - 1):
-				if order[i+1] in dependencies[order[i]]:
-					order[i], order[i + 1] = order[i + 1], order[i]
+		i = 0
+		while i < len(order) - 1:
+			if order[i + 1] in dependencies[order[i]]:
+				order[i], order[i + 1] = order[i + 1], order[i]
+				i = max(i - 1, 0)
+			else:
+				i += 1
 		fixed_updates.append(order)
 
 	return sum(int(fu[len(fu) // 2]) for fu in fixed_updates)
