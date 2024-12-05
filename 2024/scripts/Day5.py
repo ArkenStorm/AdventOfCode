@@ -26,7 +26,7 @@ def part_1(dependencies, updates):
 	# 	else:
 	# 		invalid_updates.append(update)
 
-	return sum(int(vu.split(',')[len(vu.split(',')) // 2]) for vu in valid_updates)
+	return sum(int(u.split(',')[len(u.split(',')) // 2]) for u in valid_updates)
 
 def part_2(dependencies):
 	fixed_updates = []
@@ -41,7 +41,7 @@ def part_2(dependencies):
 				i += 1
 		fixed_updates.append(order)
 
-	return sum(int(fu[len(fu) // 2]) for fu in fixed_updates)
+	return sum(int(u[len(u) // 2]) for u in fixed_updates)
 
 def main(year, day):
 	print(f'Day {day} - Print Queue')
