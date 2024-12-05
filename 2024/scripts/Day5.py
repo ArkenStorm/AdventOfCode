@@ -18,14 +18,6 @@ def part_1(dependencies, updates):
 		if update_is_good:
 			valid_updates.append(update)
 
-	# works but is slower
-	# for update in updates:
-	# 	order = update.split(',')
-	# 	if all(not any(order[i] in dependencies[x] for x in order[:i]) for i in range(len(order))):
-	# 		valid_updates.append(update)
-	# 	else:
-	# 		invalid_updates.append(update)
-
 	return sum(int(u.split(',')[len(u.split(',')) // 2]) for u in valid_updates)
 
 def part_2(dependencies):
