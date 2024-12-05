@@ -8,29 +8,28 @@ def part_1(dependencies, updates):
 	valid_updates = []
 
 	for update in updates:
-		order = update.split(',')
 		update_is_good = True
-		for i in range(len(order) - 1, -1, -1):
-			if any(order[i] in dependencies[x] for x in order[:i]):
+		for i in range(len(update) - 1, -1, -1):
+			if any(update[i] in dependencies[x] for x in update[:i]):
 				update_is_good = False
-				invalid_updates.append(order)
+				invalid_updates.append(update)
 				break
 		if update_is_good:
-			valid_updates.append(order)
+			valid_updates.append(update)
 
 	return sum(int(u[len(u) // 2]) for u in valid_updates)
 
 def part_2(dependencies):
 	fixed_updates = []
-	for order in invalid_updates:
+	for update in invalid_updates:
 		i = 0
-		while i < len(order) - 1:
-			if order[i + 1] in dependencies[order[i]]:
-				order[i], order[i + 1] = order[i + 1], order[i]
+		while i < len(update) - 1:
+			if update[i + 1] in dependencies[update[i]]:
+				update[i], update[i + 1] = update[i + 1], update[i]
 				i = max(i - 1, 0)
 			else:
 				i += 1
-		fixed_updates.append(order)
+		fixed_updates.append(update)
 
 	return sum(int(u[len(u) // 2]) for u in fixed_updates)
 
@@ -41,7 +40,7 @@ def main(year, day):
 
 	order_rules, updates = input.split('\n\n')
 	order_rules = order_rules.split('\n')
-	updates = updates.split('\n')
+	updates = [u.split(',') for u in updates.split('\n')]
 
 	dependencies = defaultdict(set)
 
