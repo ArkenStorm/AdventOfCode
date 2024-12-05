@@ -10,7 +10,7 @@ def part_2(input):
 def main(year, day):
 	print(f'Day {day} - Title')
 
-	# input = get_input(year, day)
+	input = get_input(year, day, test=True)
 
 	p1_start = datetime.now()
 	print(f'Part 1: {part_1(input)}')
