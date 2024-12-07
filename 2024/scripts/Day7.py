@@ -12,34 +12,22 @@ def is_valid_eq(target, operands, operators):
 	results = reduce(reductor, operands[1:], [operands[0]])
 	return target in results
 
+def get_total(input, operators):
+	return sum(target for target, operands in input if is_valid_eq(target, operands, operators))
+
 def part_1(input):
-	total = 0
-
-	for eq in input:
-		target, operands = eq.split(':')
-		target = int(target)
-		operands = list(map(int, operands.split()))
-
-		if is_valid_eq(target, operands, [add, mul]):
-			total += target
-	return total
+	return get_total(input, [add, mul])
 
 def part_2(input):
-	total = 0
-
-	for eq in input:
-		target, operands = eq.split(':')
-		target = int(target)
-		operands = list(map(int, operands.split()))
-
-		if is_valid_eq(target, operands, [add, mul, concat_ints]):
-			total += target
-	return total
+	return get_total(input, [add, mul, concat_ints])
 
 def main(year, day):
 	print(f'Day {day} - Bridge Repair')
 
 	input = get_input(year, day, test=False)
+
+	# format input better
+	input = [(int(target), list(map(int, operands.split()))) for target, operands in (eq.split(':') for eq in input)]
 
 	p1_start = datetime.now()
 	print(f'Part 1: {part_1(input)}')
