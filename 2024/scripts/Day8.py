@@ -35,7 +35,7 @@ def part_2(grid, node_coords):
 	return len(antinode_coords)
 
 def main(year, day):
-	print(f'Day {day} - Title')
+	print(f'Day {day} - Resonant Collinearity')
 
 	input = get_input(year, day, type='grid', test=False)
 
