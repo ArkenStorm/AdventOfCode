@@ -37,15 +37,12 @@ def part_2(grid, node_coords):
 def main(year, day):
 	print(f'Day {day} - Resonant Collinearity')
 
-	input = get_input(year, day, type='grid', test=False)
-
-	grid = np.array(input)
+	grid = get_input(year, day, type='np_grid', test=False)
 	node_coords = defaultdict(list)
 
-	for i in range(grid.shape[0]):
-		for j in range(grid.shape[1]):
-			if input[i][j] != '.':
-				node_coords[input[i][j]].append((i, j))
+	for i, j in np.ndindex(grid.shape):
+		if grid[i, j] != '.':
+			node_coords[grid[i, j]].append((i, j))
 
 	for key, nodes in node_coords.items():
 		node_coords[key] = [sorted((a, b)) for idx, a in enumerate(nodes) for b in nodes[idx + 1:]]
