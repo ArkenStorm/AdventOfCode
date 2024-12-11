@@ -2,21 +2,21 @@ from utils import *
 from datetime import datetime
 
 # (stone number, iterations left) -> resulting stones after rule application
-memo = {}
+cache = {}
 
 def apply_rules(stone, iterations):
 	if iterations == 0:
 		return 1
-	if (stone, iterations) in memo:
-		return memo[(stone, iterations)]
+	if (stone, iterations) in cache:
+		return cache[(stone, iterations)]
 	if stone == '0':
-		memo[(stone, iterations)] = apply_rules('1', iterations - 1)
+		cache[(stone, iterations)] = apply_rules('1', iterations - 1)
 	elif len(stone) % 2 == 0:
 		l, r = stone[:len(stone) // 2], stone[len(stone) // 2:]
-		memo[(stone, iterations)] = apply_rules(str(int(l)), iterations - 1) + apply_rules(str(int(r)), iterations - 1)
+		cache[(stone, iterations)] = apply_rules(str(int(l)), iterations - 1) + apply_rules(str(int(r)), iterations - 1)
 	else:
-		memo[(stone, iterations)] = apply_rules(str(int(stone) * 2024), iterations - 1)
-	return memo[(stone, iterations)]
+		cache[(stone, iterations)] = apply_rules(str(int(stone) * 2024), iterations - 1)
+	return cache[(stone, iterations)]
 
 def part_1(stones):
 	return sum(apply_rules(stone, 25) for stone in stones)
