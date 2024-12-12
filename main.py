@@ -4,7 +4,7 @@ from datetime import datetime
 
 if __name__ == '__main__':
 	year = 2024
-	day = 11
+	day = 12
 
 	print(f'Advent of Code {year}')
 
