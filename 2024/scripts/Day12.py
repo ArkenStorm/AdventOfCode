@@ -1,14 +1,9 @@
 from utils import *
 from datetime import datetime
 import numpy as np
+from itertools import combinations
 
 visited = set()
-
-def get_perimeter(grid, coords, p2):
-	if p2:
-		pass
-	else:
-		return 4 - len(coords)
 
 def flood_fill(grid, i, j, p2=False):
 	if (i, j) in visited:
@@ -19,7 +14,21 @@ def flood_fill(grid, i, j, p2=False):
 	if len(coords) == 0:
 		return 1, 4
 	else:
-		perimeter = 4 - len(coords)
+		if p2:
+			if len(coords) == 1: # a "knob"
+				perimeter += 2
+			else:
+				combos = combinations(coords, 2)
+				check_coords = [(x1 + x2 - i, y1 + y2 - j) for (x1, y1), (x2, y2) in combos]
+				check_coords = list(filter(lambda x: x != (i, j), check_coords))
+				if len(coords) == 2 and len(check_coords) > 0:
+					perimeter = 1
+				for coord in check_coords:
+					if grid[coord] != grid[i, j]:
+						perimeter += 1
+				pass
+		else:
+			perimeter = 4 - len(coords)
 	coords = list(filter(lambda x: x not in visited, coords))
 	area = 1
 	for coord in coords:
@@ -41,7 +50,6 @@ def part_2(grid):
 	total = 0
 	for i, j in np.ndindex(grid.shape):
 		if (i, j) not in visited:
-			# Probably not going to work out like this, but it might
 			area, perimeter = flood_fill(grid, i, j, True)
 			total += area * perimeter
 	return total
@@ -49,12 +57,13 @@ def part_2(grid):
 def main(year, day):
 	print(f'Day {day} - Garden Groups')
 
-	grid = get_input(year, day, type='grid', test=True)
-	grid = np.array(grid)
+	grid = get_input(year, day, type='np_grid', test=False)
 
 	p1_start = datetime.now()
 	print(f'Part 1: {part_1(grid)}')
 	p1_end = datetime.now()
+
+	visited.clear()
 
 	p2_start = datetime.now()
 	print(f'Part 2: {part_2(grid)}')
