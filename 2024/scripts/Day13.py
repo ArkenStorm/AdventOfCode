@@ -2,7 +2,7 @@ from utils import *
 from datetime import datetime
 import re
 # from pulp import LpProblem, LpVariable, LpMinimize, PULP_CBC_CMD
-from z3 import Int, Optimize, sat
+# from z3 import Int, Optimize, sat
 
 # part 1 works, part 2 doesn't??? PuLP why have you failed me
 # def solve(machines, p2=False):
@@ -50,22 +50,20 @@ def det(a, b):
 
 def get_vector(a, b, p):
 	D, Dx, Dy = det(a, b), det(p, b), det(a, p)
-	if Dx % D == 0 and Dy % D == 0:
-		return (Dx // D, Dy // D)
-	return None
+	return (Dx // D, Dy // D) if Dx % D == 0 and Dy % D == 0 else (0, 0)
 
 def cost(vector):
-	return 3 * vector[0] + vector[1] if vector else 0
+	return 3 * vector[0] + vector[1]
 
 def solve(machines):
-	return sum(cost(get_vector(machine['a'], machine['b'], machine['p'])) for machine in machines)
+	return sum(cost(get_vector(*m)) for m in machines)
 
 def part_1(machines):
 	return solve(machines)
 
 def part_2(machines):
-	for machine in machines:
-		machine['p'] = (machine['p'][0] + 10000000000000, machine['p'][1] + 10000000000000)
+	for m in machines:
+		m['p'] = (m['p'][0] + 10000000000000, m['p'][1] + 10000000000000)
 
 	return solve(machines)
 
