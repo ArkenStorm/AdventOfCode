@@ -11,13 +11,13 @@ def find_exit(bytefall):
 	q = [(0, (0, 0))] # steps, (x, y)
 	hq.heapify(q)
 	while len(q) > 0:
-		steps, (x, y) = hq.heappop(q)
-		if (x, y) in checked:
+		steps, coord = hq.heappop(q)
+		if coord in checked:
 			continue
-		checked.add((x, y))
-		if (x, y) == end:
+		checked.add(coord)
+		if coord == end:
 			return steps
-		for nx, ny in apply_deltas_4(x, y):
+		for nx, ny in apply_deltas_4(*coord):
 			if (nx, ny) in bytefall or nx < 0 or nx > end[0] or ny < 0 or ny > end[1]:
 				continue
 			hq.heappush(q, (steps + 1, (nx, ny)))
