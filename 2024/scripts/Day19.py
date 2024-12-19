@@ -9,7 +9,6 @@ def find_combinations(design):
 	if design == '': return 1
 	return sum(find_combinations(design[len(p):]) for p in patterns if design.startswith(p))
 
-
 def part_1(designs):
 	return sum(find_combinations(design) > 0 for design in designs)
 
