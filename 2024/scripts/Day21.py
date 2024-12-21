@@ -8,7 +8,7 @@ dirpad = { b: (x // 3, x % 3) for x, b in enumerate('_^A<v>') if b != '_' }
 dirs = { '^': (-1, 0), '>': (0, 1), 'v': (1, 0), '<': (0, -1) }
 
 @cache
-def get_presses(moves, robots=2, use_nums=True, start=None):
+def get_moves(moves, robots=2, use_nums=True, start=None):
 	pad = numpad if use_nums else dirpad
 	if not moves: return 0
 	if not start: start = pad['A']
@@ -31,17 +31,17 @@ def get_presses(moves, robots=2, use_nums=True, start=None):
 				x, y = x + dx, y + dy
 				if (x, y) not in pad.values(): break
 			else:
-				permutation_lens.append(get_presses(p + ('A',), robots - 1, False))
+				permutation_lens.append(get_moves(p + ('A',), robots - 1, False))
 		min_len = min(permutation_lens)
 	else:
 		min_len = len(buttons) + 1 # add 'A' press
-	return min_len + get_presses(moves[1:], robots, use_nums, (tx, ty))
+	return min_len + get_moves(moves[1:], robots, use_nums, (tx, ty))
 
 def part_1(codes):
-	return sum(int(code[:-1]) * get_presses(code, 2) for code in codes)
+	return sum(int(code[:-1]) * get_moves(code, 2) for code in codes)
 
 def part_2(codes):
-	return sum(int(code[:-1]) * get_presses(code, 25) for code in codes)
+	return sum(int(code[:-1]) * get_moves(code, 25) for code in codes)
 
 def main(year, day):
 	print(f'Day {day} - Keypad Conundrum')
