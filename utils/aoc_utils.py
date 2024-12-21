@@ -1,4 +1,5 @@
 import numpy as np
+from time import perf_counter_ns
 
 def get_input(year, day_num, type='default', test=False):
 	in_file = open(f"{year}/inputs/{'test' if test else f'Day{day_num}'}.txt", 'r')
@@ -30,3 +31,15 @@ def get_bounded_4_neighbors(grid, x, y):
 
 def get_bounded_8_neighbors(grid, x, y):
 	return get_bounded_coords(grid, apply_deltas_8(x, y))
+
+# TODO: format this better, like hh:mm:ss.ms.us.ns
+def benchmark(func):
+	def wrapper(*args, **kwargs):
+		start = perf_counter_ns()
+		result = func(*args, **kwargs)
+		end = perf_counter_ns() - start
+		time_len = min(9, ((len(str(end))-1)//3)*3)
+		time_conversion = {9: 'seconds', 6: 'milliseconds', 3: 'microseconds', 0: 'nanoseconds'}
+		print(f'{func.__name__}: {end / (10**time_len)} {time_conversion[time_len]}')
+		return result
+	return wrapper
