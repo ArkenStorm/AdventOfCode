@@ -32,14 +32,19 @@ def get_bounded_4_neighbors(grid, x, y):
 def get_bounded_8_neighbors(grid, x, y):
 	return get_bounded_coords(grid, apply_deltas_8(x, y))
 
-# TODO: format this better, like hh:mm:ss.ms.us.ns
 def benchmark(func):
 	def wrapper(*args, **kwargs):
 		start = perf_counter_ns()
 		result = func(*args, **kwargs)
 		end = perf_counter_ns() - start
-		time_len = min(9, ((len(str(end))-1)//3)*3)
-		time_conversion = {9: 'seconds', 6: 'milliseconds', 3: 'microseconds', 0: 'nanoseconds'}
-		print(f'{func.__name__}: {end / (10**time_len)} {time_conversion[time_len]}')
+
+		hours, remainder = divmod(end, 3_600_000_000_000)
+		minutes, remainder = divmod(remainder, 60_000_000_000)
+		seconds, remainder = divmod(remainder, 1_000_000_000)
+		milliseconds, remainder = divmod(remainder, 1_000_000)
+		microseconds, nanoseconds = divmod(remainder, 1_000)
+
+		formatted_time = f'{hours:02}:{minutes:02}:{seconds:02}.{milliseconds:03}.{microseconds:03}.{nanoseconds:03}'
+		print(f'{func.__name__}: {formatted_time}')
 		return result
 	return wrapper
