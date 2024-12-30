@@ -22,8 +22,8 @@ def main(year, day):
 		left.append(l)
 		right.append(r)
 
-		left = sorted(map(int, left))
-		right = sorted(map(int, right))
+	left = sorted(map(int, left))
+	right = sorted(map(int, right))
 
 	p1_start = datetime.now()
 	print(f'Part 1: {part_1(left, right)}')
